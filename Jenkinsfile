@@ -229,9 +229,9 @@ stage('Deploiement en staging'){
         }
 
 stage('Deploiement en prod'){
-      //  when {
-      //       branch 'master' // l'exécution ne se fait que sur la branche master
-       //  }
+        when {
+             branch 'master' // l'exécution ne se fait que sur la branche master
+         }
         environment
         {
         KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
