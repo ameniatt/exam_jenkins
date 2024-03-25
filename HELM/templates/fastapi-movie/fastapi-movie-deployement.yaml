@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fastapi_movie_deployment
+  name: fastapi-movie-deployment
 spec:
   replicas: {{ .Values.fastapi_movie.replicaCount }}
   selector:
@@ -24,8 +24,8 @@ spec:
           value: "http://fastapi-cast-service.{{ .Values.namespace }}.svc.cluster.local:8000/api/v1/casts/"
         envFrom:
           - secretRef:
-              name: fastapi_movie_secret
+              name: fastapi-movie-secret
           - configMapRef:
-              name: fastapi_movie_config
+              name: fastapi-movie-config
         ports:
         - containerPort: 8000

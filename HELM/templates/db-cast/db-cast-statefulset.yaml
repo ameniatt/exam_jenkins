@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: statefulset
 metadata:
-  name: db_cast_statefulset
+  name: db-cast-statefulset
 spec:
   replicas: {{ .Values.db_cast.replicaCount }}
   selector:
@@ -19,9 +19,9 @@ spec:
         - containerPort: {{ .Values.db_cast.service.port }}
         envFrom:
           - secretRef:
-              name: db_cast_secret
+              name: db-cast-secret
           - configMapRef:
-              name: db_cast_config
+              name: db-cast-config
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
           name: "{{ .Values.db_cast.name }}_volume"

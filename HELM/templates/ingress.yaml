@@ -14,7 +14,7 @@ spec:
           pathType: Prefix
           backend:
              service:
-              name: fastapi_movie_service
+              name: fastapi-movie-service
               port:
                 number: 8000
         # Chemin pour les requêtes relatives aux acteurs dans l'API V1
@@ -22,6 +22,6 @@ spec:
           pathType: Prefix
           backend:
              service:
-              name: fastapi_cast_service
+              name: fastapi-cast-service
               port:
                 number: 8000

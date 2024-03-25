@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: fastapi_cast_config
+  name: fastapi-cast-config
 data:
-  HOST: "db_movie_service.{{ .Values.namespace }}.svc.cluster.local"
+  HOST: "db-movie-service.{{ .Values.namespace }}.svc.cluster.local"
   PORT: "5432"
   NAME: "cast_db_{{ .Values.namespace }}"

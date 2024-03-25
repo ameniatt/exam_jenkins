@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fastapi_cast_deployment
+  name: fastapi-cast-deployment
 spec:
   replicas: {{ .Values.fastapi_cast.replicaCount }}
   selector:
@@ -22,9 +22,9 @@ spec:
           value: "postgresql://$(USERNAME):$(PASSWORD)@$(HOST):$(PORT)/$(NAME)"
         envFrom:
           - secretRef:
-              name: fastapi_cast_secret
+              name: fastapi-cast-secret
           - configMapRef:
-              name: fastapi_cast_config
+              name: fastapi-cast-config
         ports:
         - containerPort: 8000
         

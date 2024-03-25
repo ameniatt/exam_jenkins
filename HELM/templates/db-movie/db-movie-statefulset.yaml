@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: statefulset
 metadata:
-  name: db_movie_statefulset
+  name: db-movie-statefulset
 spec:
   replicas: {{ .Values.db_movie.replicaCount }}
   selector:
@@ -19,9 +19,9 @@ spec:
         - containerPort: {{ .Values.db_movie.service.port }}
         envFrom:
           - secretRef:
-              name: db_movie_secret
+              name: db-movie-secret
           - configMapRef:
-              name: db_movie_config
+              name: db-movie-config
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
           name: "{{ .Values.db_movie.name }}_volume"

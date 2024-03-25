@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: fastapi_movie_service
+  name: fastapi-movie-service
   
 spec:
   selector:
-    app: fastapi_movie
+    app: fastapi-movie
   ports:
     - protocol: TCP
       port: 8001

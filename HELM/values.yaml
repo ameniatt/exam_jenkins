@@ -10,9 +10,6 @@ db_cast:
   image:
     repository: postgres
     tag: 12.0-alpine
-  secret:
-    POSTGRES_USER: Y2FzdF9kYl91c2VybmFtZQ==
-    POSTGRES_PASSWORD: Y2FzdF9kYl9wYXNzd29yZA==
   service:
     protocol: TCP
     port: 5432
@@ -25,9 +22,6 @@ db_movie:
   image:
     repository: postgres
     tag: 12.0-alpine
-  secret:
-    POSTGRES_USER: bW92aWVfZGJfdXNlcm5hbWU=
-    POSTGRES_PASSWORD: YbW92aWVfZGJfcGFzc3dvcmQ=
   service:
     protocol: TCP
     port: 5432
