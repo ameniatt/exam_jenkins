@@ -6,7 +6,7 @@ spec:
   ingressClassName: traefik
   rules:
   
-  - host: "{{ .Values.namespace }}.cours-data.cloudns.ch"
+  - host: "test.cours-data.cloudns.ch"
     http:
       paths:
         # Chemin pour les requêtes relatives aux films dans l'API V1
