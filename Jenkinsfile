@@ -165,7 +165,7 @@ stage('Deploiement en dev'){
                 mkdir .kube
                 ls
                 cat $KUBECONFIG > .kube/config
-                cp helm/values.yaml values.yml
+                cp HELM/values.yaml values.yml
                 cat values.yml
                 sed -i "s+namespace.*+namespace: ${NAMESPACE}+g" values.yml
                 sed -i "s+fastapi_cast.image.tag.*+tag: ${DOCKER_TAG}+g" values.yml
@@ -191,7 +191,7 @@ stage('Deploiement en QA'){
                 mkdir .kube
                 ls
                 cat $KUBECONFIG > .kube/config
-                cp helm/values.yaml values.yml
+                cp HELM/values.yaml values.yml
                 cat values.yml
                 sed -i "s+namespace.*+namespace: ${NAMESPACE}+g" values.yml
                 sed -i "s+fastapi_cast.image.tag.*+tag: ${DOCKER_TAG}+g" values.yml
@@ -216,7 +216,7 @@ stage('Deploiement en staging'){
                 mkdir .kube
                 ls
                 cat $KUBECONFIG > .kube/config
-                cp helm/values.yaml values.yml
+                cp HELM/values.yaml values.yml
                 cat values.yml
                 sed -i "s+namespace.*+namespace: ${NAMESPACE}+g" values.yml
                 sed -i "s+fastapi_cast.image.tag.*+tag: ${DOCKER_TAG}+g" values.yml
@@ -250,7 +250,7 @@ stage('Deploiement en prod'){
                 mkdir .kube
                 ls
                 cat $KUBECONFIG > .kube/config
-                cp helm/values.yaml values.yml
+                cp HELM/values.yaml values.yml
                 cat values.yml
                 sed -i "s+namespace.*+namespace: ${NAMESPACE}+g" values.yml
                 sed -i "s+casts.image.tag.*+tag: ${DOCKER_TAG}+g" values.yml
