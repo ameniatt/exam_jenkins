@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: fastapi-movie-deployment
 spec:
-  replicas: {{ .Values.fastapi-movie.replicaCount }}
+  replicas: {{ .Values.fastapi_movie.replicaCount }}
   selector:
     matchLabels:
       app: fastapi-movie
