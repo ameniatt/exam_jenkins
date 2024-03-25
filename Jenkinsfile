@@ -247,7 +247,9 @@ stage('Deploiement en prod'){
                     }
 
                 script {
-                echo "${env.BRANCH_NAME}"
+                echo branch
+                echo $branch
+                echo BRANCH_NAME
                 echo env.BRANCH_NAME
                 sh '''
                 rm -Rf .kube
