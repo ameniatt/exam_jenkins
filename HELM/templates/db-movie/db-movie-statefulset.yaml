@@ -17,11 +17,6 @@ spec:
         image: "{{ .Values.db_movie.image.repository }}:{{ .Values.db_movie.image.tag | default .Chart.AppVersion }}"
         ports:
         - containerPort: 5432
-       # env:
-        #- name: POSTGRES_USER
-         # value: movie_db_username
-        #- name: POSTGRES_PASSWORD
-         # value: movie_db_password
         envFrom:
           - secretRef:
               name: db-movie-secret

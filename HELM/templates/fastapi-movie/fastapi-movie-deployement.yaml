@@ -19,7 +19,7 @@ spec:
         args: ["app.main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
         env:
         - name: DATABASE_URI
-          value: "postgresql://$(USENAME):$(PASSWORD)@$(HOST):$(PORT)/$(NAME)"
+          value: "postgresql://$(USERNAME):$(PASSWORD)@$(HOST):$(PORT)/$(NAME)"
         - name: CAST_SERVICE_HOST_URL
           value: "http://fastapi-cast-service.{{ .Values.namespace }}.svc.cluster.local:8000/api/v1/casts/"
         envFrom:
