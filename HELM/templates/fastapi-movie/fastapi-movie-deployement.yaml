@@ -24,7 +24,7 @@ spec:
           value: "http://fastapi-cast-service.{{ .Values.namespace }}.svc.cluster.local:8000/api/v1/casts/"
         envFrom:
           - secretRef:
-            name: fastapi-movie-secret
+              name: fastapi-movie-secret
           - configMapRef:
               name: fastapi-movie-config
         ports:
