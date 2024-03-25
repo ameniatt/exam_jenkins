@@ -247,6 +247,8 @@ stage('Deploiement en prod'){
                     }
 
                 script {
+                echo "${env.BRANCH_NAME}"
+                echo env.BRANCH_NAME
                 sh '''
                 rm -Rf .kube
                 mkdir .kube
@@ -258,8 +260,6 @@ stage('Deploiement en prod'){
                 sed -i "s+casts.image.tag.*+tag: ${DOCKER_TAG}+g" values.yml
                 sed -i "s+movies.image.tag.*+tag: ${DOCKER_TAG}+g" values.yml
                 helm upgrade --install app HELM --values=values.yml --namespace prod
-                echo "${env.BRANCH_NAME}"
-                echo env.BRANCH_NAME
                 '''
                 }
             }
