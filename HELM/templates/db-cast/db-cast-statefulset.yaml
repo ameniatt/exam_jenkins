@@ -6,17 +6,17 @@ spec:
   replicas: {{ .Values.db_cast.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Values.db_cast.name }}
+      app: db-cast
   template:
     metadata:
       labels:
-        app: {{ .Values.db_cast.name }}
+        app: db-cast
     spec:
       containers:
-      - name: {{ .Values.db_cast.name }}
+      - name: db-cast
         image: "{{ .Values.db_cast.image.repository }}:{{ .Values.db_cast.image.tag | default .Chart.AppVersion }}"
         ports:
-        - containerPort: {{ .Values.db_cast.service.port }}
+        - containerPort: 5432
         envFrom:
           - secretRef:
               name: db-cast-secret
@@ -24,12 +24,12 @@ spec:
               name: db-cast-config
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
-          name: "{{ .Values.db_cast.name }}_volume"
+          name: "db-cast-volume"
         ports:
-        - containerPort: {{ .Values.db_cast.service.port }}
+        - containerPort: 5432
   volumeClaimTemplates:
   - metadata:
-      name: "{{ .Values.db_cast.name }}_volume"
+      name: "db-cast-volume"
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:

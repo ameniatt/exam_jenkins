@@ -4,9 +4,8 @@ metadata:
   name: db-cast-service
 spec:
   selector:
-    app: {{ .Values.db_cast.name }}
+    app: db-cast
   ports:
-    - protocol: {{ .Values.db_cast.service.protocol }}
-      port: {{ .Values.db_cast.service.port }}
-      targetPort: {{ .Values.db_cast.service.targetPort }}
-  type: {{ .Values.db_cast.service.type }}
+  - port: 5432
+    targetPort: 5432
+  type: ClusterIP

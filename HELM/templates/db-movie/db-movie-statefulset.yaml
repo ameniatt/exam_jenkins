@@ -6,17 +6,17 @@ spec:
   replicas: {{ .Values.db_movie.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Values.db_movie.name }}
+      app: db-movie
   template:
     metadata:
       labels:
-        app: {{ .Values.db_movie.name }}
+        app: db-movie
     spec:
       containers:
-      - name: {{ .Values.db_movie.name }}
+      - name: db-movie
         image: "{{ .Values.db_movie.image.repository }}:{{ .Values.db_movie.image.tag | default .Chart.AppVersion }}"
         ports:
-        - containerPort: {{ .Values.db_movie.service.port }}
+        - containerPort: 5432
         envFrom:
           - secretRef:
               name: db-movie-secret
@@ -24,12 +24,12 @@ spec:
               name: db-movie-config
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
-          name: "{{ .Values.db_movie.name }}_volume"
+          name: "db-movie-volume"
         ports:
-        - containerPort: {{ .Values.db_movie.service.port }}
+        - containerPort: 5432
   volumeClaimTemplates:
   - metadata:
-      name: "{{ .Values.db_movie.name }}_volume"
+      name: "db-movie-volume"
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:

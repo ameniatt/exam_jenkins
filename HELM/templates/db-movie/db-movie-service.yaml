@@ -4,9 +4,8 @@ metadata:
   name: db-movie-service
 spec:
   selector:
-    app: {{ .Values.db_movie.name }}
+    app: db-movie
   ports:
-    - protocol: {{ .Values.db_movie.service.protocol }}
-      port: {{ .Values.db_movie.service.port }}
-      targetPort: {{ .Values.db_movie.service.targetPort }}
-  type: {{ .Values.db_movie.service.type }}
+    - port: 5432
+      targetPort: 5432
+  type: ClusterIP

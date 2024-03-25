@@ -6,14 +6,14 @@ spec:
   replicas: {{ .Values.fastapi_cast.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Values.fastapi_cast.name }}
+      app: fastapi-cast
   template:
     metadata:
       labels:
-        app: {{ .Values.fastapi_cast.name }}
+        app: fastapi-cast
     spec:
       containers:
-      - name: {{ .Values.fastapi_cast.name }}
+      - name: fastapi-cast
         image: "{{ .Values.fastapi_cast.image.repository }}:{{ .Values.fastapi_cast.image.tag | default .Chart.AppVersion }}"
         command: ["uvicorn"]
         args: ["app.main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
