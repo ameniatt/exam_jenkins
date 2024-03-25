@@ -5,7 +5,7 @@
 namespace: ""
 
 db_cast:
-  name: db_cast
+  name: db-cast
   replicaCount: 1
   image:
     repository: postgres
@@ -17,7 +17,7 @@ db_cast:
     type: ClusterIP
 
 db_movie:
-  name: db_movie
+  name: db-movie
   replicaCount: 1
   image:
     repository: postgres
@@ -29,14 +29,14 @@ db_movie:
     type: ClusterIP
 
 fastapi_cast:
-  name : fastapi_cast
+  name : fastapi-cast
   replicaCount: 1
   image:
     repository: ameniatt/fastapicast
     tag: ""
 
 fastapi_movie:
-  name : fastapi_movie
+  name : fastapi-movie
   replicaCount: 1
   image:
     repository: ameniatt/fastapimovie
