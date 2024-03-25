@@ -152,115 +152,120 @@ stages {
 
     }
 
-    stage('Deploiement en dev'){
-            environment
-            {
-            KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
-            NAMESPACE = "dev"
-            }
-                steps {
-                    script {
-                    sh '''
-                    rm -Rf .kube
-                    mkdir .kube
-                    ls
-                    cat $KUBECONFIG > .kube/config
-                    cp HELM/values.yaml values.yml
-                    cat values.yml
-                    sed -i "s+namespace.*+namespace: ${NAMESPACE}+g" values.yml
-                    sed -i "s+fastapi_cast.image.tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                    sed -i "s+fastapi_movie.image.tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                    helm upgrade --install app HELM --values=values.yml --namespace dev
-                    '''
-                    }
+stage('Deploiement en dev'){
+        environment
+        {
+        KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
+        NAMESPACE = "dev"
+        }
+            steps {
+                script {
+                sh '''
+                rm -Rf .kube
+                mkdir .kube
+                ls
+                cat $KUBECONFIG > .kube/config
+                cp HELM/values.yaml values.yml
+                cat values.yml
+                sed -i "s+namespace.*+namespace: ${NAMESPACE}+g" values.yml
+                sed -i "s+fastapi_cast.image.tag.*+tag: ${DOCKER_TAG}+g" values.yml
+                sed -i "s+fastapi_movie.image.tag.*+tag: ${DOCKER_TAG}+g" values.yml
+                helm upgrade --install app HELM --values=values.yml --namespace dev
+                '''
                 }
-
             }
 
+        }
 
-    stage('Deploiement en QA'){
-            environment
-            {
-            KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
-            NAMESPACE = "qa"
-            }
-                steps {
-                    script {
-                    sh '''
-                    rm -Rf .kube
-                    mkdir .kube
-                    ls
-                    cat $KUBECONFIG > .kube/config
-                    cp HELM/values.yaml values.yml
-                    cat values.yml
-                    sed -i "s+namespace.*+namespace: ${NAMESPACE}+g" values.yml
-                    sed -i "s+fastapi_cast.image.tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                    sed -i "s+fastapi_movie.image.tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                    helm upgrade --install app HELM --values=values.yml --namespace dev
-                    '''
-                    }
+
+stage('Deploiement en QA'){
+        environment
+        {
+        KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
+        NAMESPACE = "qa"
+        }
+            steps {
+                script {
+                sh '''
+                rm -Rf .kube
+                mkdir .kube
+                ls
+                cat $KUBECONFIG > .kube/config
+                cp HELM/values.yaml values.yml
+                cat values.yml
+                sed -i "s+namespace.*+namespace: ${NAMESPACE}+g" values.yml
+                sed -i "s+fastapi_cast.image.tag.*+tag: ${DOCKER_TAG}+g" values.yml
+                sed -i "s+fastapi_movie.image.tag.*+tag: ${DOCKER_TAG}+g" values.yml
+                helm upgrade --install app HELM --values=values.yml --namespace dev
+                '''
                 }
-
             }
 
-    stage('Deploiement en staging'){
-            environment
-            {
-            KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
-            NAMESPACE = "staging"
-            }
-                steps {
-                    script {
-                    sh '''
-                    rm -Rf .kube
-                    mkdir .kube
-                    ls
-                    cat $KUBECONFIG > .kube/config
-                    cp HELM/values.yaml values.yml
-                    cat values.yml
-                    sed -i "s+namespace.*+namespace: ${NAMESPACE}+g" values.yml
-                    sed -i "s+fastapi_cast.image.tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                    sed -i "s+fastapi_movie.image.tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                    helm upgrade --install app HELM --values=values.yml --namespace dev
-                    '''
-                    }
+        }
+
+stage('Deploiement en staging'){
+        environment
+        {
+        KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
+        NAMESPACE = "staging"
+        }
+            steps {
+                script {
+                sh '''
+                rm -Rf .kube
+                mkdir .kube
+                ls
+                cat $KUBECONFIG > .kube/config
+                cp HELM/values.yaml values.yml
+                cat values.yml
+                sed -i "s+namespace.*+namespace: ${NAMESPACE}+g" values.yml
+                sed -i "s+fastapi_cast.image.tag.*+tag: ${DOCKER_TAG}+g" values.yml
+                sed -i "s+fastapi_movie.image.tag.*+tag: ${DOCKER_TAG}+g" values.yml
+                helm upgrade --install app HELM --values=values.yml --namespace dev
+                '''
                 }
-
             }
 
-    stage('Deploiement en prod'){
-            when {
-                branch 'master' // l'exécution ne se fait que sur la branche master
-            }
-            environment
-            {
-            KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
-            NAMESPACE = "prod"
-            }
-                steps {
-                // Create an Approval Button with a timeout of 15minutes.
-                // this require a manuel validation in order to deploy on production environment
-                        timeout(time: 15, unit: "MINUTES") {
-                            input message: 'Do you want to deploy in production ?', ok: 'Yes'
-                        }
+        }
 
-                    script {
-                    sh '''
-                    rm -Rf .kube
-                    mkdir .kube
-                    ls
-                    cat $KUBECONFIG > .kube/config
-                    cp HELM/values.yaml values.yml
-                    cat values.yml
-                    sed -i "s+namespace.*+namespace: ${NAMESPACE}+g" values.yml
-                    sed -i "s+casts.image.tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                    sed -i "s+movies.image.tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                    helm upgrade --install app HELM --values=values.yml --namespace prod
-                    '''
+stage('Deploiement en prod'){
+        if (env.BRANCH_NAME == 'master'){
+       // when {
+         //    branch 'master' // l'exécution ne se fait que sur la branche master
+         //}
+        environment
+        {
+        KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
+        NAMESPACE = "prod"
+        }
+            steps {
+            // Create an Approval Button with a timeout of 15minutes.
+            // this require a manuel validation in order to deploy on production environment
+                    timeout(time: 15, unit: "MINUTES") {
+                        input message: 'Do you want to deploy in production ?', ok: 'Yes'
                     }
-                }
 
+                script {
+                sh '''
+                rm -Rf .kube
+                mkdir .kube
+                ls
+                cat $KUBECONFIG > .kube/config
+                cp HELM/values.yaml values.yml
+                cat values.yml
+                sed -i "s+namespace.*+namespace: ${NAMESPACE}+g" values.yml
+                sed -i "s+casts.image.tag.*+tag: ${DOCKER_TAG}+g" values.yml
+                sed -i "s+movies.image.tag.*+tag: ${DOCKER_TAG}+g" values.yml
+                helm upgrade --install app HELM --values=values.yml --namespace prod
+                '''
+                }
             }
+
+        }
+        else {
+        echo "Le stage de déploiement en prod ne s'exécute que sur la branche master."
+    }
+}
 
 }
 }
