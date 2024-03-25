@@ -229,10 +229,11 @@ stage('Deploiement en staging'){
         }
 
 stage('Deploiement en prod'){
-        if (env.BRANCH_NAME == 'master'){
-       // when {
+        //when {
          //    branch 'master' // l'exécution ne se fait que sur la branche master
-         //}
+        // }
+        script{
+        echo "${env.BRANCH_NAME}"}
         environment
         {
         KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
@@ -262,10 +263,6 @@ stage('Deploiement en prod'){
             }
 
         }
-        else {
-        echo "Le stage de déploiement en prod ne s'exécute que sur la branche master."
-    }
-}
 
 }
 }
