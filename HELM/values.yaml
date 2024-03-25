@@ -23,7 +23,6 @@ fastapi_cast:
     tag: ""
 
 fastapi_movie:
-  name : fastapi-movie
   replicaCount: 1
   image:
     repository: ameniatt/fastapimovie
