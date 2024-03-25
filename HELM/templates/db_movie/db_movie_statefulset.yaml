@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: statefulset
+metadata:
+  name: db_movie_statefulset
+spec:
+  replicas: {{ .Values.db_movie.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.db_movie.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.db_movie.name }}
+    spec:
+      containers:
+      - name: {{ .Values.db_movie.name }}
+        image: "{{ .Values.db_movie.image.repository }}:{{ .Values.db_movie.image.tag | default .Chart.AppVersion }}"
+        ports:
+        - containerPort: {{ .Values.db_movie.service.port }}
+        envFrom:
+          - secretRef:
+              name: db_movie_secret
+          - configMapRef:
+              name: db_movie_config
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: "{{ .Values.db_movie.name }}_volume"
+        ports:
+        - containerPort: {{ .Values.db_movie.service.port }}
+  volumeClaimTemplates:
+  - metadata:
+      name: "{{ .Values.db_movie.name }}_volume"
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi

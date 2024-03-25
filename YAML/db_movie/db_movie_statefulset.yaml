@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: statefulset
+metadata:
+  name: db_movie_statefulset
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db_movie
+  template:
+    metadata:
+      labels:
+        app: db_movie
+    spec:
+      containers:
+      - name: db_movie
+        image: postgres:12.1-alpine
+        ports:
+        - containerPort: 5432
+        envFrom:
+          - secretRef:
+              name: db_movie_secret
+          - configMapRef:
+              name: db_movie_config
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: db_movie_volume
+        ports:
+        - containerPort: 5432
+  volumeClaimTemplates:
+  - metadata:
+      name: db_movie_volume
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi

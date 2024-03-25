@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: statefulset
+metadata:
+  name: db_cast_statefulset
+spec:
+  replicas: {{ .Values.db_cast.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.db_cast.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.db_cast.name }}
+    spec:
+      containers:
+      - name: {{ .Values.db_cast.name }}
+        image: "{{ .Values.db_cast.image.repository }}:{{ .Values.db_cast.image.tag | default .Chart.AppVersion }}"
+        ports:
+        - containerPort: {{ .Values.db_cast.service.port }}
+        envFrom:
+          - secretRef:
+              name: db_cast_secret
+          - configMapRef:
+              name: db_cast_config
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: "{{ .Values.db_cast.name }}_volume"
+        ports:
+        - containerPort: {{ .Values.db_cast.service.port }}
+  volumeClaimTemplates:
+  - metadata:
+      name: "{{ .Values.db_cast.name }}_volume"
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi

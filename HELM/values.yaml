@@ -1,0 +1,49 @@
+# Default values for HELM.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+namespace: ""
+
+db_cast:
+  name: db_cast
+  replicaCount: 1
+  image:
+    repository: postgres
+    tag: 12.0-alpine
+  secret:
+    POSTGRES_USER: Y2FzdF9kYl91c2VybmFtZQ==
+    POSTGRES_PASSWORD: Y2FzdF9kYl9wYXNzd29yZA==
+  service:
+    protocol: TCP
+    port: 5432
+    targetPort: 5432
+    type: ClusterIP
+
+db_movie:
+  name: db_movie
+  replicaCount: 1
+  image:
+    repository: postgres
+    tag: 12.0-alpine
+  secret:
+    POSTGRES_USER: bW92aWVfZGJfdXNlcm5hbWU=
+    POSTGRES_PASSWORD: YbW92aWVfZGJfcGFzc3dvcmQ=
+  service:
+    protocol: TCP
+    port: 5432
+    targetPort: 5432
+    type: ClusterIP
+
+fastapi_cast:
+  name : fastapi_cast
+  replicaCount: 1
+  image:
+    repository: ameniatt/fastapicast
+    tag: ""
+
+fastapi_movie:
+  name : fastapi_movie
+  replicaCount: 1
+  image:
+    repository: ameniatt/fastapimovie
+    tag: ""

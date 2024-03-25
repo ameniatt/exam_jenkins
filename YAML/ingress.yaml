@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+spec:
+  ingressClassName: traefik
+  rules:
+  
+  - host: test.cours-data.cloudns.ch
+    http:
+      paths:
+        # Chemin pour les requêtes relatives aux films dans l'API V1
+        - path: /api/v1/movies
+          pathType: Prefix
+          backend:
+             service:
+              name: fastapi_movie_service
+              port:
+                number: 8000
+        # Chemin pour les requêtes relatives aux acteurs dans l'API V1
+        - path: /api/v1/casts
+          pathType: Prefix
+          backend:
+             service:
+              name: fastapi_cast_service
+              port:
+                number: 8000

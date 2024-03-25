@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: statefulset
+metadata:
+  name: db_cast_statefulset
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db_cast
+  template:
+    metadata:
+      labels:
+        app: db_cast
+    spec:
+      containers:
+      - name: db_cast
+        image: postgres:12.1-alpine
+        ports:
+        - containerPort: 5432
+        envFrom:
+          - secretRef:
+              name: db_cast_secret
+          - configMapRef:
+              name: db_cast_config
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: db_cast_volume
+        ports:
+        - containerPort: 5432
+  volumeClaimTemplates:
+  - metadata:
+      name: db_cast_volume
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi
