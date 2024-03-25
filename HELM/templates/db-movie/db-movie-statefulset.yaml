@@ -21,7 +21,7 @@ spec:
         #- name: POSTGRES_USER
          # value: movie_db_username
         #- name: POSTGRES_PASSWORD
-          value: movie_db_password
+         # value: movie_db_password
         envFrom:
           - secretRef:
               name: db-movie-secret
