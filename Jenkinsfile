@@ -233,8 +233,7 @@ stage('Deploiement en prod'){
          //    branch 'master' // l'exécution ne se fait que sur la branche master
         // }
 
-        echo "${env.BRANCH_NAME}"
-        echo env.BRANCH_NAME
+
         environment
         {
         KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
@@ -259,6 +258,8 @@ stage('Deploiement en prod'){
                 sed -i "s+casts.image.tag.*+tag: ${DOCKER_TAG}+g" values.yml
                 sed -i "s+movies.image.tag.*+tag: ${DOCKER_TAG}+g" values.yml
                 helm upgrade --install app HELM --values=values.yml --namespace prod
+                echo "${env.BRANCH_NAME}"
+                echo env.BRANCH_NAME
                 '''
                 }
             }
