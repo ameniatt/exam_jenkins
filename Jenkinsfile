@@ -232,8 +232,9 @@ stage('Deploiement en prod'){
         //when {
          //    branch 'master' // l'exécution ne se fait que sur la branche master
         // }
-        script{
-        echo "${env.BRANCH_NAME}"}
+
+        echo "${env.BRANCH_NAME}"
+        echo env.BRANCH_NAME
         environment
         {
         KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
