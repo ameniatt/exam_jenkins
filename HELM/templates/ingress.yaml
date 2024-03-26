@@ -10,7 +10,7 @@ spec:
     http:
       paths:
         # Chemin pour les requêtes relatives aux films dans l'API V1
-        - path: /api/v1/movies
+        - path: /api/v1/fastapi-movie
           pathType: Prefix
           backend:
              service:
@@ -18,7 +18,7 @@ spec:
               port:
                 number: 8000
         # Chemin pour les requêtes relatives aux acteurs dans l'API V1
-        - path: /api/v1/casts
+        - path: /api/v1/fastapi-cast
           pathType: Prefix
           backend:
              service:
