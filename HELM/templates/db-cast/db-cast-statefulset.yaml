@@ -24,12 +24,12 @@ spec:
               name: db-cast-config
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
-          name: "db-cast-volume"
+          name: db-cast-volume
         ports:
         - containerPort: 5432
   volumeClaimTemplates:
   - metadata:
-      name: "db-cast-volume"
+      name: db-cast-volume
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:

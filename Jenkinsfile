@@ -230,7 +230,7 @@ stage('Deploiement en staging'){
 
 stage('Deploiement en prod'){
         //when {
-         //    branch 'master' // l'exécution ne se fait que sur la branche master
+        //    branch 'master' // l'exécution ne se fait que sur la branche master
         // }
         environment
         {
