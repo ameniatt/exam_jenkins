@@ -16,7 +16,8 @@ spec:
              service:
               name: fastapi-movie-service
               port:
-                number: 8000
+                number: 8020
+                tagetport: 8000
         # Chemin pour les requêtes relatives aux acteurs dans l'API V1
         - path: /api/v1/casts
           pathType: Prefix
