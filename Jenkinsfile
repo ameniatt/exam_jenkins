@@ -41,8 +41,9 @@ stages {
                 sh '''
                 docker container rm -f cast_db_dev_container || true
                 docker container rm -f movie_db_dev_container || true
+                docker network create mon_network || true
                 docker run -d \
-                --name cast_db_dev_container \
+                --name cast_db_dev_container --network mon_network\
                 -v postgres_data_cast:/var/lib/postgresql/data/ \
                 -e POSTGRES_USER=cast_db_username \
                 -e POSTGRES_PASSWORD=cast_db_password \
@@ -50,7 +51,7 @@ stages {
                 -p 5433:5432 \
                 postgres:12.1-alpine
                 docker run -d \
-                --name movie_db_dev_container \
+                --name movie_db_dev_container --network mon_network\
                 -v postgres_data_movie:/var/lib/postgresql/data/ \
                 -e POSTGRES_USER=movie_db_username \
                 -e POSTGRES_PASSWORD=movie_db_password \
@@ -68,7 +69,7 @@ stages {
                 steps {
                     script {
                         sh '''
-                        docker run -d -p 8002:8000 --name $DOCKER_IMAGE_CAST \
+                        docker run -d -p 8002:8000 --name $DOCKER_IMAGE_CAST --network mon_network\
                         -e DATABASE_URI=postgresql://cast_db_username:cast_db_password@cast_db_dev_container:5432/cast_db_dev \
                         $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG \
                         uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
@@ -81,7 +82,7 @@ stages {
                 steps {
                     script {
                         sh '''
-                        docker run -d -p 8001:8000 --name $DOCKER_IMAGE_MOVIE \
+                        docker run -d -p 8001:8000 --name $DOCKER_IMAGE_MOVIE --network mon_network\
                         -e DATABASE_URI=postgresql://movie_db_username:movie_db_password@movie_db_dev_container:5432/movie_db_dev \
                         -e CAST_SERVICE_HOST_URL=http://cast_service:8000/api/v1/casts/ \
                         $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG \
