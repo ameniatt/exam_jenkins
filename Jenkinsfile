@@ -31,19 +31,18 @@ stages {
                     }
                 }
             }
-
         }
     }
  
-    stage('Docker Build DB'){ // docker build DB images
+    stage('Docker Build & run DB'){ // docker build DB images
         steps {
             script {
                 sh '''
-                docker container rm -f cast_db_dev_container || true
-                docker container rm -f movie_db_dev_container || true
+                docker container rm -f cast_db_dev || true
+                docker container rm -f movie_db_dev || true
                 docker network create mon_network || true
                 docker run -d \
-                --name cast_db_dev_container --network mon_network\
+                --name cast_db_dev --network mon_network\
                 -v postgres_data_cast:/var/lib/postgresql/data/ \
                 -e POSTGRES_USER=cast_db_username \
                 -e POSTGRES_PASSWORD=cast_db_password \
@@ -51,7 +50,7 @@ stages {
                 -p 5433:5432 \
                 postgres:12.1-alpine
                 docker run -d \
-                --name movie_db_dev_container --network mon_network\
+                --name movie_db_dev --network mon_network\
                 -v postgres_data_movie:/var/lib/postgresql/data/ \
                 -e POSTGRES_USER=movie_db_username \
                 -e POSTGRES_PASSWORD=movie_db_password \
